@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Super Games Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+
+<body>
+<div id="app">
+
+  <header class="topbar">
+    <button class="brand-btn" onclick="goHome()">
+      <div class="brand-mark"><span>▮</span></div>
+      <div class="brand-name">Super Games Store</div>
+    </button>
+    <div class="account-link">Your Account</div>
+  </header>
+
+  <nav class="subbar">
+    <button class="nav-btn" id="nav-browse" onclick="goHome()">Browse</button>
+    <button class="nav-btn" id="nav-reco" onclick="goHome()">Recommendations</button>
+    <button class="nav-btn" id="nav-sale" onclick="showPage('sale')">Summer Sale</button>
+    <div class="search-wrap">
+      <input class="search-input" type="text" placeholder="Search the store">
+    </div>
+    <button class="cart-btn" onclick="showPage('cart')">Cart<span id="cart-count-label"></span></button>
+  </nav>
+
+  <!-- ===================== HOME PAGE ===================== -->
+  <main class="page" id="page-home">
+    <h1 class="section-title">SUMMER SALE — BEST SELLERS</h1>
+
+    <div class="carousel-row">
+      <button class="carousel-arrow" onclick="cyclePreview(-1)">◀</button>
+      <div class="carousel-card" id="preview-art-wrap"></div>
+      <div class="carousel-info">
+        <div class="game-title-pill">
+          <span id="preview-title">—</span>
+          <button class="add-cart-mini" id="preview-add-btn">Add to Cart</button>
+        </div>
+        <p class="game-desc" id="preview-desc">—</p>
+        <div class="sale-item-price" id="preview-price"></div>
+      </div>
+      <button class="carousel-arrow" onclick="cyclePreview(1)">▶</button>
+    </div>
+
+    <div class="deals-banner">
+      <h2>Top Deals &amp; Biggest Discounts</h2>
+      <p>Indie and AAA games on sale now!</p>
+      <button class="shop-now-btn" onclick="showPage('sale')">Shop Now</button>
+    </div>
+
+    <h2 class="cat-title">Shop by Category</h2>
+    <div class="cat-grid" id="cat-grid"></div>
+  </main>
+
+  <!-- ===================== SUMMER SALE PAGE ===================== -->
+  <main class="page" id="page-sale">
+    <h2 class="sale-page-title">Top Deals &amp; Biggest Discounts</h2>
+    <div class="sale-layout">
+      <div class="filters">
+        <select id="filter-category" onchange="renderSaleList()">
+          <option value="">Categories</option>
+        </select>
+        <select id="filter-price" onchange="renderSaleList()">
+          <option value="">Price</option>
+          <option value="low-high">Price: Low to High</option>
+          <option value="high-low">Price: High to Low</option>
+        </select>
+        <select id="filter-discount" onchange="renderSaleList()">
+          <option value="">Discount</option>
+          <option value="high-low">Biggest Discount First</option>
+          <option value="only-discounted">Only Discounted</option>
+        </select>
+      </div>
+      <div class="sale-list" id="sale-list"></div>
+    </div>
+  </main>
+
+  <!-- ===================== CART PAGE ===================== -->
+  <main class="page" id="page-cart">
+    <h1 class="section-title">Your Cart</h1>
+    <div class="cart-wrap">
+      <div class="cart-box" id="cart-box"></div>
+      <div class="cart-actions">
+        <button class="btn-outline" onclick="goHome()">Continue Shopping</button>
+        <button class="btn-go" id="advance-payment-btn" onclick="showPage('payment')">Advance to Payment</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===================== PAYMENT PAGE ===================== -->
+  <main class="page" id="page-payment">
+    <h1 class="section-title">Payment</h1>
+    <div class="pay-wrap">
+      <div class="pay-box">
+        <label for="card-number">Card Number</label>
+        <input class="card-input" id="card-number" type="text" inputmode="numeric" placeholder="12-digit card number" maxlength="12" oninput="validateCard()">
+        <div class="card-hint">Enter exactly 12 digits to continue.</div>
+        <div class="pay-summary">Items in order: <strong id="pay-item-count">0</strong></div>
+        <div class="confirm-row">
+          <button class="btn-go" id="confirm-payment-btn" disabled onclick="confirmPayment()">Confirm Payment</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===================== SURVEY PAGE ===================== -->
+  <main class="page" id="page-survey">
+    <h1 class="section-title">Quick Survey</h1>
+    <div class="survey-wrap">
+      <div class="survey-box">
+        <div class="survey-q">
+          <h3>How was your experience today?</h3>
+          <input type="range" min="1" max="10" value="5" id="survey-slider" oninput="updateSliderVal()">
+          <div class="range-scale"><span>1</span><span>10</span></div>
+          <div class="range-value" id="survey-slider-val">5</div>
+        </div>
+        <div class="survey-q">
+          <h3>Did you find everything you were looking for?</h3>
+          <div class="yn-row">
+            <button class="yn-btn" data-q="found" data-v="yes" onclick="setYN('found','yes')"><span class="yn-box"></span>Yes</button>
+            <button class="yn-btn" data-q="found" data-v="no" onclick="setYN('found','no')"><span class="yn-box"></span>No</button>
+          </div>
+        </div>
+        <div class="survey-q">
+          <h3>Would you recommend us to someone looking to purchase our items?</h3>
+          <div class="yn-row">
+            <button class="yn-btn" data-q="recommend" data-v="yes" onclick="setYN('recommend','yes')"><span class="yn-box"></span>Yes</button>
+            <button class="yn-btn" data-q="recommend" data-v="no" onclick="setYN('recommend','no')"><span class="yn-box"></span>No</button>
+          </div>
+        </div>
+        <div class="survey-confirm">
+          <button class="btn-outline" onclick="confirmSurvey()">Confirm Choices</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+</div>
+
+
+</body>
+</html>
