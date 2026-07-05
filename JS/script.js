@@ -65,8 +65,7 @@ function renderCategoryGrid(){
   CATEGORIES.forEach((cat,i)=>{
     const box = document.createElement('button');
     box.className = 'cat-box';
-    box.textContent = `Category ${i+1}`;
-    box.title = cat;
+    box.textContent = cat;
     box.onclick = ()=>{
       document.getElementById('filter-category').value = cat;
       showPage('sale');
