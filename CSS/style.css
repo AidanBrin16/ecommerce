@@ -32,12 +32,15 @@
 
   /* ===== HEADER ===== */
   header.topbar{
-    background:linear-gradient(90deg,var(--cyan-bright),var(--teal-600));
-    padding:16px 28px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-  }
+  background:linear-gradient(90deg,var(--cyan-bright),var(--teal-600));
+  padding-top:16px;
+  padding-bottom:16px;
+  padding-left: max(28px, calc((100% - 1200px)/2 + 28px));
+  padding-right: max(28px, calc((100% - 1200px)/2 + 28px));
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
   .brand{
     display:flex;align-items:center;gap:10px;
   }
@@ -51,17 +54,20 @@
   .brand-name{font-size:22px;font-weight:700;color:var(--teal-900);letter-spacing:.3px;}
   .account-link{font-size:13px;color:var(--teal-900);font-weight:600;opacity:.85;}
   nav.subbar{
-    background:var(--teal-700);
-    padding:10px 28px;
-    display:flex;
-    align-items:center;
-    gap:12px;
-    flex-wrap:wrap;
-    position:sticky;
-    top:0;
-    z-index:100;
-    box-shadow:0 4px 12px rgba(11,61,61,.15);
-  }
+  background:var(--teal-700);
+  padding-top:10px;
+  padding-bottom:10px;
+  padding-left: max(28px, calc((100% - 1200px)/2 + 28px));
+  padding-right: max(28px, calc((100% - 1200px)/2 + 28px));
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  position:sticky;
+  top:0;
+  z-index:100;
+  box-shadow:0 4px 12px rgba(11,61,61,.15);
+}
   .brand-btn{
     background:none;border:none;padding:0;margin:0;
     display:flex;align-items:center;gap:10px;
